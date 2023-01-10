@@ -1,0 +1,111 @@
+#include <windows.h>
+#include<stdio.h>
+#include <iostream>
+#include <fstream>
+#include <Conio.h>
+#include<ctype.h>
+#include<stdio.h>
+#include<process.h>
+#include<stdlib.h>
+
+using namespace std;
+class vehicle_detail{
+	string vclass,vmop;
+	char cont;
+	int classno,fare1,mop;
+	float fare2;
+public:
+	
+	void position(int x,int y){
+		COORD c;
+		c.X=x;
+		c.Y=y;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),c);
+	}
+	
+	void menu(){
+	
+	do{
+		
+		system("cls");
+		position(20,10);
+		cout<<"\nEnter vehicle class number \n1:Car / Jeep / Van/similar mini light commercial vehicle \n2:Light Commercial Vehicle \n3:Three Axle Commercial Vehicles \n4:Bus/Truck \n5:4 to 6 axle \n6:7 or More Axle ";
+	    cin>>classno;
+	    switch(classno){
+	    	case 1:
+	    		fare1=135;
+	    		vclass="car";
+	    		break;
+	    	case 2:
+			    fare1=180;
+			    vclass="LCV";
+			    break;
+			case 3:
+			    fare1=270;
+			    vclass="3 axle CV";
+			    break;
+			case 4:
+			    fare1=390;
+			    vclass="Bus/Truck";
+			    break;
+			case 5:
+			    fare1=430;
+			    vclass="4 to 6 axle";
+			    break;
+			case 6:	
+		        fare1=475;
+		        vclass="7 & above axles";
+		        break;
+		        
+		    default:
+		    	cout<<"\nchoose the vehicle number betwen 1 to 6";
+		    	continue;
+			
+		}
+		system("cls");
+		position(30,10);
+	    cout<<"\nEnter method of payment(MOP) number:\n1:Single Trip\n2:Return\n3: Day pass\n4:Monthly Pass\n5:Monthly Pass Limited Trips";
+	    cin>>mop;
+		switch(mop){
+	    	case 1:
+	    		fare2=fare1;
+	    		vmop="Single trip";
+	    		break;
+	    	case 2:
+			    fare2=fare1*2;
+			    vmop="Return journey";
+			    break;
+			case 3:
+			    fare2=fare1*2.5;
+			    vmop="Day pass";
+				break;
+			case 4:
+			    fare2=fare1*9;
+			    vmop="Monthly Pass";
+			    break;
+			case 5:
+			    fare2=fare1*5;
+			    vmop="Monthly Pass Limited Trips";
+				break;
+			default:
+		    	cout<<"\nchoose the vehicle number betwen 1 to 5";
+		    	continue;
+				}
+		cout<<"\n\nFare to be collected:"<<fare2;
+		ofstream dataout("database.txt",ios::app);
+	    dataout<<"vehicle class number: "<<classno<<"\nvehicle class: "<<vclass;
+	    dataout<<"\nMethod of Payment:"<<vmop;
+	    dataout<<"\nFare taken:"<<fare2<<endl<<endl<<endl;
+	    dataout.close();
+	    cout<<"\npress any key to add more or press n to exit\n";
+	    cin>>cont;
+	    }
+		while(cont!='n');
+}};
+int main(){
+	vehicle_detail vd;
+    system("Color E4");
+    
+	vd.menu();
+	return 0;
+}
